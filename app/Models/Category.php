@@ -33,4 +33,8 @@ class Category {
     public function createCategory($data){
         return $this->orm->create($data);
     }
+
+    public function updateCategory($data, $conditions){
+        return $this->orm->update($data, $conditions);
+    }
 }
