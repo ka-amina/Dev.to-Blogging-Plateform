@@ -25,6 +25,10 @@ class Tag {
         return $this->orm->read();
     }
 
+    public function deleteTag($id){
+        return $this->orm->delete($id);
+    }
+
 }
 
 

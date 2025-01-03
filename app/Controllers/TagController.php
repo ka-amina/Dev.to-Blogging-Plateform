@@ -13,7 +13,10 @@ class TagController{
     public function listTags(){
         return $this->tag->getTags();
     }
-
+    
+    public function deleteTag($id){
+        $this->tag->deleteTag($id);
+    }
 }
 
 

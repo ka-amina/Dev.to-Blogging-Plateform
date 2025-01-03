@@ -19,3 +19,5 @@ $Tag=new TagController;
 // tags
 $tags= $Tag->listTags();
 print_r($tags);
+
+$Tag->deleteTag(['id'=> 8 ]);
