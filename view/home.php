@@ -7,5 +7,7 @@ use App\Controllers\CategoryController;
 
 $controller = new CategoryController();
 
-$categories = $controller->listCategories();
-print_r($categories);
+// $categories = $controller->listCategories();
+// print_r($categories);
+
+$controller->deleteCategory(['id' => 2]);

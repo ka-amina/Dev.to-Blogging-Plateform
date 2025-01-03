@@ -25,4 +25,8 @@ class Category {
     public function getCategories() {
         return $this->orm->read();
     }
+
+    public function deleteCategory($id){
+        return $this->orm->delete($id);
+    }
 }

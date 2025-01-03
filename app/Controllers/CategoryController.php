@@ -13,4 +13,9 @@ class CategoryController {
     public function listCategories() {
         return $this->category->getCategories();
     }
+    
+    public function deleteCategory($id){
+        $category= new Category();
+        $category-> deleteCategory($id);
+    }
 }
