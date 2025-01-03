@@ -1,10 +1,10 @@
 <?php
-namespace App\Models;
+namespace App\config;
 
-use PDO;
-use PDOException;
-use Dotenv\Dotenv;
 require '../../vendor/autoload.php';
+use PDO;
+// use PDOException;
+use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
