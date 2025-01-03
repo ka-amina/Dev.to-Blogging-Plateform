@@ -15,7 +15,12 @@ class CategoryController {
     }
     
     public function deleteCategory($id){
-        $category= new Category();
-        $category-> deleteCategory($id);
+        
+        $this->category-> deleteCategory($id);
+    }
+
+    public function createCategory($data){
+       
+        $this->category->createCategory($data);
     }
 }

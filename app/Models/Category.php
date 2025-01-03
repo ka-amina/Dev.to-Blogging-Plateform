@@ -29,4 +29,8 @@ class Category {
     public function deleteCategory($id){
         return $this->orm->delete($id);
     }
+
+    public function createCategory($data){
+        return $this->orm->create($data);
+    }
 }

@@ -10,4 +10,5 @@ $controller = new CategoryController();
 // $categories = $controller->listCategories();
 // print_r($categories);
 
-$controller->deleteCategory(['id' => 2]);
+// $controller->deleteCategory(['id' => 2]);
+$controller->createCategory(['name'=> 'cyber security']);
