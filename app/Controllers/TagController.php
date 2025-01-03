@@ -21,6 +21,10 @@ class TagController{
     public function createTag($data){
         $this->tag->createTag($data);
     }
+
+    public function updateTag($data, $conditions){
+        $this->tag->updateTag($data,$conditions);
+    }
 }
 
 

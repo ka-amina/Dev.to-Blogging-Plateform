@@ -33,6 +33,10 @@ class Tag {
         return $this->orm->create($data);
     }
 
+    public function updateTag($data,$conditions){
+        return $this->orm->update($data, $conditions);
+    }
+
 }
 
 

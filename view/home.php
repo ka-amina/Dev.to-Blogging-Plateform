@@ -22,3 +22,5 @@ print_r($tags);
 
 // $Tag->deleteTag(['id'=> 8 ]);
 // $Tag->createTag(['name'=>'hi']);
+
+$Tag->updateTag(['name'=> 'smile'], ['id'=>11]);
