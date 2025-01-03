@@ -17,6 +17,10 @@ class TagController{
     public function deleteTag($id){
         $this->tag->deleteTag($id);
     }
+
+    public function createTag($data){
+        $this->tag->createTag($data);
+    }
 }
 
 

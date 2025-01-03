@@ -29,6 +29,10 @@ class Tag {
         return $this->orm->delete($id);
     }
 
+    public function createTag($data){
+        return $this->orm->create($data);
+    }
+
 }
 
 
