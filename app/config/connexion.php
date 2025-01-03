@@ -1,10 +1,12 @@
 <?php
 namespace App\config;
 
-require '../../vendor/autoload.php';
+require '../vendor/autoload.php';
+
 use PDO;
-// use PDOException;
+use PDOException;
 use Dotenv\Dotenv;
+
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
@@ -21,7 +23,7 @@ class Connection
                     $_ENV['PASSWORD']
                 );
                 self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                echo"connected successfully";
+                // echo"connected successfully";
             } catch (PDOException $error) {
                 die("Connection failed: " . $error->getMessage());
             }
@@ -29,5 +31,5 @@ class Connection
         return self::$connection;
     }
 }
-Connection::connect();
+// Connection::connect();
 ?>
