@@ -28,7 +28,9 @@ $article= new ArticleController();
 // $Tag->updateTag(['name'=> 'smile'], ['id'=>11]);
 
 // articles
-// $articles= $article->listArticles();
-// print_r($articles);
+$articles= $article->listArticles();
+print_r($articles);
 
 // $article->deleteArticle(['id'=>5]);
+
+// $article->createArticle(['title'=>'Getting Started with React Hooks','slug'=>'test','content'=>'React Hooks are a powerful feature that allows you to use state and other React features without writing a class component...','excerpt'=>'Learn how to use React Hooks in your applications','meta_description'=>'A comprehensive guide to React Hooks for beginners','category_id'=>1,'featured_image'=>'images/react-hooks.jpg','status'=>'published','scheduled_date'=>NULL,'author_id'=>'5']);

@@ -29,6 +29,10 @@ class Article{
     return $this->orm->delete($id);
    }
 
+   public function createArticle($data){
+    return $this->orm->create($data);
+   }
+
 }
 
 

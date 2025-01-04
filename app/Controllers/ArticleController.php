@@ -17,6 +17,10 @@ class ArticleController {
     public function deleteArticle($id){
         $this->article->deleteArticle($id);
     }
+    
+    public function createArticle($data){
+        $this->article->createArticle($data);
+    }
 }
 
 

@@ -67,8 +67,8 @@ class ORM {
         from articles
         JOIN categories on articles.category_id = categories.id
         join users on articles.author_id = users.id
-        join article_tags on articles.id = article_tags.article_id
-        join tags on article_tags.tag_id = tags.id
+        left join article_tags on articles.id = article_tags.article_id
+        left join tags on article_tags.tag_id = tags.id
         group by articles.id
         order by articles.created_at";
         $result= $this->connection->prepare($query);
