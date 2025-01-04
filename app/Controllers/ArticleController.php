@@ -21,6 +21,10 @@ class ArticleController {
     public function createArticle($data){
         $this->article->createArticle($data);
     }
+
+    public function updateArticle($data,$conditions){
+        $this->article->updateArticle($data,$conditions);
+    }
 }
 
 

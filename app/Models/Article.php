@@ -33,6 +33,10 @@ class Article{
     return $this->orm->create($data);
    }
 
+   public function updateArticle($data,$conditions){
+    return $this->orm->update($data,$conditions);
+   }
+
 }
 
 
