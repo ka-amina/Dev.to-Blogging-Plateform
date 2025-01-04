@@ -28,5 +28,7 @@ $article= new ArticleController();
 // $Tag->updateTag(['name'=> 'smile'], ['id'=>11]);
 
 // articles
-$articles= $article->listArticles();
-print_r($articles);
+// $articles= $article->listArticles();
+// print_r($articles);
+
+// $article->deleteArticle(['id'=>5]);

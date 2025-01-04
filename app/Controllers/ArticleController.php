@@ -13,6 +13,10 @@ class ArticleController {
     public function listArticles(){
         return $this->article->getArticle();
     }
+
+    public function deleteArticle($id){
+        $this->article->deleteArticle($id);
+    }
 }
 
 
