@@ -60,4 +60,19 @@ class ORM {
         $result->execute(array_merge($data, $conditions));
         return;
       }
+
+    public function readArticles(){
+        
+        $query="SELECT articles.id,title,slug,content,excerpt,status,views,created_at,categories.name as category_name,users.username as author_name,GROUP_CONCAT(tags.name) as tag_names
+        from articles
+        JOIN categories on articles.category_id = categories.id
+        join users on articles.author_id = users.id
+        join article_tags on articles.id = article_tags.article_id
+        join tags on article_tags.tag_id = tags.id
+        group by articles.id
+        order by articles.created_at";
+        $result= $this->connection->prepare($query);
+        $result->execute();
+        return $result->fetchAll();
+    }
 }

@@ -1,0 +1,19 @@
+<?php
+namespace App\Controllers;
+
+use App\Models\Article;
+
+class ArticleController {
+    protected $article;
+
+    public function __construct(){
+        $this->article= new Article();
+    }
+    
+    public function listArticles(){
+        return $this->article->getArticle();
+    }
+}
+
+
+?>
