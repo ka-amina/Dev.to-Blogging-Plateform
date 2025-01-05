@@ -28,8 +28,10 @@ $article= new ArticleController();
 // $Tag->updateTag(['name'=> 'smile'], ['id'=>11]);
 
 // articles
-$articles= $article->listArticles();
-print_r($articles);
+$articles= $Tag->listTags();
+foreach ($articles as $article) {
+    echo "Article ID: " . $article['id'] . "<br>";  // Display article id
+}
 
 // $article->deleteArticle(['id'=>5]);
 

@@ -70,10 +70,10 @@ class ORM {
         left join article_tags on articles.id = article_tags.article_id
         left join tags on article_tags.tag_id = tags.id
         group by articles.id
-        order by articles.created_at";
+        order by articles.created_at desc";
         $result= $this->connection->prepare($query);
         $result->execute();
-        return $result->fetchAll();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function sum(){
