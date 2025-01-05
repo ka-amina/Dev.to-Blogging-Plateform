@@ -36,3 +36,5 @@ print_r($articles);
 // $article->createArticle(['title'=>'Getting Started with React Hooks','slug'=>'test','content'=>'React Hooks are a powerful feature that allows you to use state and other React features without writing a class component...','excerpt'=>'Learn how to use React Hooks in your applications','meta_description'=>'A comprehensive guide to React Hooks for beginners','category_id'=>1,'featured_image'=>'images/react-hooks.jpg','status'=>'published','scheduled_date'=>NULL,'author_id'=>'5']);
 
 // $article->updateArticle(['slug'=>'test2'],['id'=>9]);
+$articleCount = $article->countArticles();
+print_r($articleCount);

@@ -1,3 +1,17 @@
+<?php
+require_once '../app/config/connexion.php';
+require '../vendor/autoload.php';
+use App\Controllers\ArticleController;
+use App\Controllers\CategoryController;
+use App\Controllers\TagController;
+
+$articleCounter= new ArticleController();
+$tagCounter= new TagController();
+$categoryCounter= new CategoryController();
+$articleCount = $articleCounter->countArticles();
+$tagCount = $tagCounter->sumTags();
+$categoryCount = $categoryCounter->countCategories();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -768,7 +782,7 @@
                                         class="flex items-center gap-0.5 text-sm font-medium text-emerald-500">
                                         <span>Articles</span>
                                     </div>
-                                    <dt class="text-2xl font-extrabold">5</dt>
+                                    <dt class="text-2xl font-extrabold"><?= htmlspecialchars($articleCount) ?></dt>
 
                                 </div>
                                 <div class="relative w-full max-w-28">
@@ -812,7 +826,7 @@
                                         <span>Tags</span>
                                     </div>
                                     <dl>
-                                        <dt class="text-2xl font-extrabold">3</dt>
+                                        <dt class="text-2xl font-extrabold"><?= htmlspecialchars($tagCount) ?></dt>
                                     </dl>
                                 </div>
                                 <div class="relative w-full max-w-28">
@@ -832,7 +846,7 @@
                                         <span>Categories</span>
                                     </div>
                                     <dl>
-                                        <dt class="text-2xl font-extrabold">2</dt>
+                                        <dt class="text-2xl font-extrabold"><?= htmlspecialchars($categoryCount) ?></dt>
                                     </dl>
                                 </div>
                                 <div class="relative w-full max-w-28">

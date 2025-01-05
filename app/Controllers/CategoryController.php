@@ -23,7 +23,12 @@ class CategoryController {
        
         $this->category->createCategory($data);
     }
+
     public function updateCategory($data,$conditions){
         $this->category->updateCategory($data,$conditions);
+    }
+
+    public function countCategories(){
+        return $this->category->countCategories();
     }
 }

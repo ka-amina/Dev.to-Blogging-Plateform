@@ -37,6 +37,10 @@ class Article{
     return $this->orm->update($data,$conditions);
    }
 
+   public function countArticles(){
+    return $this->orm->sum();
+   }
+
 }
 
 

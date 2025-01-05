@@ -75,4 +75,12 @@ class ORM {
         $result->execute();
         return $result->fetchAll();
     }
+
+    public function sum(){
+        $query="SELECT COUNT(*) as total from {$this->table}";
+        $result = $this->connection->prepare($query);
+        $result->execute();
+        return $result->fetch(PDO::FETCH_ASSOC)['total'];
+
+    }
 }

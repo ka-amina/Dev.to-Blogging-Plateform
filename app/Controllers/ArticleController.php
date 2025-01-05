@@ -25,6 +25,10 @@ class ArticleController {
     public function updateArticle($data,$conditions){
         $this->article->updateArticle($data,$conditions);
     }
+
+    public function countArticles(){
+       return $this->article->countArticles();
+    }
 }
 
 

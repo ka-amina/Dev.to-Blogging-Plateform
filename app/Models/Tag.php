@@ -36,7 +36,10 @@ class Tag {
     public function updateTag($data,$conditions){
         return $this->orm->update($data, $conditions);
     }
-
+    
+    public function sumTags(){
+        return $this->orm->sum();
+    }
 }
 
 

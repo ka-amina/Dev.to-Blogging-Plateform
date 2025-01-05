@@ -25,6 +25,10 @@ class TagController{
     public function updateTag($data, $conditions){
         $this->tag->updateTag($data,$conditions);
     }
+
+    public function sumTags(){
+        return $this->tag->sumTags();
+    }
 }
 
 

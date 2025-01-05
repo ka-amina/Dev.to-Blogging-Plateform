@@ -37,4 +37,8 @@ class Category {
     public function updateCategory($data, $conditions){
         return $this->orm->update($data, $conditions);
     }
+
+    public function countCategories(){
+        return $this->orm->sum();
+    }
 }
