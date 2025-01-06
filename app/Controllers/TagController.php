@@ -1,35 +1,66 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Models\Tag;
 
-class TagController{
+class TagController
+{
     protected $tag;
 
-    public function __construct(){
-        $this->tag =  new Tag(); 
+    public function __construct()
+    {
+        $this->tag =  new Tag();
     }
 
-    public function listTags(){
+    public function listTags()
+    {
         return $this->tag->getTags();
     }
-    
-    public function deleteTag($id){
-        $this->tag->deleteTag($id);
+
+    public function deleteTag($id)
+    {
+        if (isset($_GET['id'])){
+            $id=['id'=>$_GET['id']];
+            $this->tag->deleteTag($id);
+            header("Location: tags.php");
+            exit();
+        }
     }
 
-    public function createTag($data){
-        $this->tag->createTag($data);
+    public function createTag($data)
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = [
+                'name' => $_POST['tagName']
+            ];
+            $this->tag->createTag($data);
+            header("Location: tags.php");
+            exit();
+        }
     }
 
-    public function updateTag($data, $conditions){
-        $this->tag->updateTag($data,$conditions);
+    public function updateTag()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->tag->updateTag(
+                ['name' => $_POST['tagName']],
+                ['id' => $_GET['id']]
+            );
+            header("Location: tags.php");
+            exit();
+        }
+        
+       
     }
 
-    public function sumTags(){
+    public function sumTags()
+    {
         return $this->tag->sumTags();
     }
+
+    public function getTagById($id)
+    {
+        return $this->tag->getTagById($id);
+    }
 }
-
-
-?>

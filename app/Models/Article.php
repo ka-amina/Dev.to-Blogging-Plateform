@@ -41,6 +41,10 @@ class Article{
     return $this->orm->sum();
    }
 
+   public function getArticleById($id){
+    return $this->orm->getArticlesById($id);
+   }
+
 }
 
 
