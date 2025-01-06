@@ -20,7 +20,13 @@ class TagController
 
     public function deleteTag($id)
     {
-        $this->tag->deleteTag($id);
+        if (isset($_GET['id'])){
+            $id=['id'=>$_GET['id']];
+            $this->tag->deleteTag($id);
+            header("Location: tags.php");
+            exit();
+        }
+        
     }
 
     public function createTag($data)
@@ -38,10 +44,17 @@ class TagController
     public function updateTag($data, $conditions)
     {
         $this->tag->updateTag($data, $conditions);
+        header("Location: tags.php");
+        exit();
     }
 
     public function sumTags()
     {
         return $this->tag->sumTags();
+    }
+
+    public function getTagById($id)
+    {
+        return $this->tag->getTagById($id);
     }
 }

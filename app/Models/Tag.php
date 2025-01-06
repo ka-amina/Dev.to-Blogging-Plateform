@@ -40,6 +40,10 @@ class Tag {
     public function sumTags(){
         return $this->orm->sum();
     }
+
+    public function getTagById($id){
+        return $this->orm->getById($id);
+    }
 }
 
 
