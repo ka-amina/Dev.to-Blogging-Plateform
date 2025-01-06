@@ -7,7 +7,7 @@ use App\Controllers\TagController;
 $tag = new TagController();
 $tagInfo = $tag->getTagById($_GET['id']);
 $tag_id = $_GET['id'];
-echo $tag_id;
+// echo $tag_id;
 
 $tag->updateTag();
 ?>
