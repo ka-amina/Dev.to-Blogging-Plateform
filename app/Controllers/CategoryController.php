@@ -35,11 +35,20 @@ class CategoryController {
         }
     }
 
-    public function updateCategory($data,$conditions){
-        $this->category->updateCategory($data,$conditions);
+    public function updateCategory(){
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->category->updateCategory(['name' => $_POST['categoryName']],['id' => $_GET['id']]);
+            header("Location: categories.php");
+            exit();
+        }
     }
 
     public function countCategories(){
         return $this->category->countCategories();
+    }
+
+    public function getCategoryById($id){
+        return $this->category->getCategryById($id);
     }
 }

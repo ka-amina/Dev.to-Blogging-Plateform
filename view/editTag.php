@@ -7,16 +7,11 @@ use App\Controllers\TagController;
 $tag = new TagController();
 $tagInfo = $tag->getTagById($_GET['id']);
 $tag_id = $_GET['id'];
+echo $tag_id;
 
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    error_log("POST data: " . print_r($_POST, true));
-    $tag->updateTag(
-        ['name' => $_POST['tagName']],
-        ['id' => $_POST['id']]
-    );
-}
-
+$tag->updateTag();
+?>
+ 
 
 ?>
 <!DOCTYPE html>
@@ -364,8 +359,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div id="tagForm" class=" flex flex-col justify-center overflow-hidden rounded-lg bg-white p-6 ring-1 ring-slate-200/50 dark:bg-slate-900 dark:ring-slate-700/60 xl:col-span-4 justify-center ">
 
-                        <form action="tags.php?action=update" method="POST" class="max-w-sm w-72 mx-auto ">
-                            <input type="hidden" name="id" value="<?php echo htmlspecialchars($_GET['id']); ?>">
+                        <form action="editTag.php?id=<?=$_GET['id']; ?>" method="POST" class="max-w-sm w-72 mx-auto ">
+                            <input type="hidden" name="id" value="<?=$_GET['id']; ?>">
                             <div class="mb-5">
                                 <label for="tagName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tag Name</label>
                                 <input type="text" name="tagName" id="tagName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example: javascript" value="<?= $tagInfo["name"] ?>" />

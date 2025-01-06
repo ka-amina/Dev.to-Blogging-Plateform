@@ -41,4 +41,8 @@ class Category {
     public function countCategories(){
         return $this->orm->sum();
     }
+
+    public function getCategryById($id){
+        return $this->orm->getById($id);
+    }
 }

@@ -26,7 +26,6 @@ class TagController
             header("Location: tags.php");
             exit();
         }
-        
     }
 
     public function createTag($data)
@@ -41,11 +40,18 @@ class TagController
         }
     }
 
-    public function updateTag($data, $conditions)
+    public function updateTag()
     {
-        $this->tag->updateTag($data, $conditions);
-        header("Location: tags.php");
-        exit();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->tag->updateTag(
+                ['name' => $_POST['tagName']],
+                ['id' => $_GET['id']]
+            );
+            header("Location: tags.php");
+            exit();
+        }
+        
+       
     }
 
     public function sumTags()
