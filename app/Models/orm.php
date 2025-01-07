@@ -114,4 +114,21 @@ class ORM
         $result->execute();
         return $result->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function login($email, $password)
+    {
+        $query = "SELECT * FROM users WHERE email = :email";
+        $result = $this->connection->prepare($query);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->execute();
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+        if ($result->rowCount() > 0) {
+            if (password_verify($password, $row["password_hash"])) {
+                return $row;
+            }
+            return false;
+        }
+    }
+
+    
 }

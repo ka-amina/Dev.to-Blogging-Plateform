@@ -29,4 +29,30 @@ class userController
             exit();
         }
     }
+    
+    public function login() {
+        // session_start();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+            $user = $this->user->login($email, $password);
+           
+
+            if ($user) {
+                $_SESSION["role"] = $user["role"];
+                $_SESSION["id_author"] = $user["id"];
+                $_SESSION["username"] = $user["username"];
+                if ($_SESSION['role'] == 'admin') {
+                    header("Location: dashboard.php");
+                } elseif ($_SESSION['role'] == 'author') {
+                    header("Location: articles.php");
+                }
+                exit();
+            } else {
+                $_SESSION['error'] = 'Invalid email or password.';
+                header("Location: home.php");
+            }
+        }
+    }
+    
 }

@@ -2,6 +2,8 @@
 require_once '../app/config/connexion.php';
 require '../vendor/autoload.php';
 
+session_start();
+
 use App\Controllers\ArticleController;
 use App\Controllers\CategoryController;
 
@@ -360,7 +362,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                         <div
                             class="flex flex-col justify-center overflow-hidden rounded-lg bg-white p-6 ring-1 ring-slate-200/50 dark:bg-slate-900 dark:ring-slate-700/60 xl:col-span-4">
                             <div class="mb-6 flex items-center justify-between gap-4">
-                                <h2 class="text-xl font-extrabold">Articles</h2>
+                                <h2 class="text-xl font-extrabold"><?= $_SESSION["username"]?>'s Articles</h2>
                                 <button
                                     id="showCategoryForm"
                                     type="button"
