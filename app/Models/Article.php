@@ -29,6 +29,11 @@ class Article
         return $this->orm->readArticles();
     }
 
+    public function getRecentArticles()
+    {
+        return $this->orm->getRecentArticles();
+    }
+
     public function deleteArticle($id)
     {
         return $this->orm->delete($id);

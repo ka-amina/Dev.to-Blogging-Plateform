@@ -39,6 +39,10 @@ class user
         return $this->orm->read();
     }
 
+    public function getTopUsers(){
+        return $this->orm->getTopUsers();
+    }
+
     public function deleteUdser($id){
         return $this->orm->delete($id);
     }
@@ -53,5 +57,9 @@ class user
 
     public function updateUser($data,$conditions){
         return $this->orm->update($data, $conditions);
+    }
+
+    public function countUsers(){
+        return $this->orm->sum();
     }
 }

@@ -23,6 +23,11 @@ class ArticleController
         return $this->article->getArticle();
     }
 
+    public function getRecentArticles()
+    {
+        return $this->article->getRecentArticles();
+    }
+
     public function deleteArticle($id)
     {
         if (isset($_GET['id'])) {

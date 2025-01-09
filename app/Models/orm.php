@@ -82,6 +82,21 @@ class ORM
         $result->execute();
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function getRecentArticles()
+    {
+
+        $query = "SELECT articles.id,title,slug,featured_image as image,content,excerpt,status,views,created_at,categories.name as category_name,users.username as author_name,GROUP_CONCAT(tags.name) as tag_names
+        from articles
+        JOIN categories on articles.category_id = categories.id
+        join users on articles.author_id = users.id
+        left join article_tags on articles.id = article_tags.article_id
+        left join tags on article_tags.tag_id = tags.id
+        group by articles.id
+        order by articles.created_at desc limit 5";
+        $result = $this->connection->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function getArticlesById($id)
     {
 
@@ -189,11 +204,30 @@ class ORM
     //     return;
     // }
 
-    public function incrementViews($id){
-        $query="UPDATE articles set views=views+1 where id=$id";
-        $result=$this->connection->prepare($query);
+    public function incrementViews($id)
+    {
+        $query = "UPDATE articles set views=views+1 where id=$id";
+        $result = $this->connection->prepare($query);
         $result->execute();
         return;
+    }
+
+    public function getTopUsers()
+    {
+        $query = "SELECT 
+     users.id,profile_picture_url, username, 
+     COUNT(articles.id) AS article_count, 
+     SUM(articles.views) AS viewsAll 
+     FROM articles 
+     JOIN users ON users.id = articles.author_id 
+     GROUP BY users.id 
+     ORDER BY viewsAll DESC 
+     LIMIT 3";
+     $result = $this->connection->prepare($query);
+     $result->execute();
+     return $result->fetchAll(PDO::FETCH_ASSOC);
+
+     
     }
 
     

@@ -13,7 +13,7 @@ session_start();
 // unset($_SESSION['error']);
 
 if (isset($_GET['action']) && $_GET['action'] == 'create') {
-    $user->login();
+  $user->login();
 }
 ?>
 
@@ -21,45 +21,35 @@ if (isset($_GET['action']) && $_GET['action'] == 'create') {
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
 <body>
-    
-<div class="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
-  <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-  <form action="login.php?action=create" method="POST">
-  <div class="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
-    </div>
-    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-      <div class="max-w-md mx-auto">
-        <div>
-          <h1 class="text-2xl font-semibold">Login Form with Floating Labels</h1>
+
+<div class="flex flex-col justify-center font-[sans-serif] p-4">
+    <div class="max-w-md w-full mx-auto shadow-[0_2px_10px_-2px_rgba(195,169,50,0.5)] p-8 relative mt-12">
+
+      <form action="login.php?action=create" class="mt-12" method="POST">
+        <h3 class="text-xl font-bold text-blue-500 mb-8 text-center">Login</h3>
+        <div class="space-y-4">
+          <input name="email" type="text" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-4 focus:bg-transparent outline-blue-300 transition-all" placeholder="Enter email" />
+          <input name="password" type="password" class="bg-gray-100 w-full text-sm text-gray-800 px-4 py-4 focus:bg-transparent outline-blue-300 transition-all" placeholder="Enter password" />
         </div>
-        <div class="divide-y divide-gray-200">
-          <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
-            <div class="relative">
-              <input autocomplete="off" id="email" name="email" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
-              <label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
-            </div>
-            <div class="relative">
-              <input autocomplete="off" id="password" name="password" type="password" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password" />
-              <label for="password" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
-            </div>
-            <div class="relative">
-              <button type="submit" class="bg-blue-500 text-white rounded-md px-2 py-1">Login</button>
-            </div>
-          </div>
+
+        <div class="mt-8">
+          <button type="submit" class="w-full py-4 px-8 text-sm tracking-wide font-semibold text-white bg-blue-500 hover:bg-blue-600 focus:outline-none">
+            sign in
+          </button>
         </div>
-      </div>
+        <p class="text-sm mt-8 text-center text-gray-800">or<a href="register.php" class="text-blue-500 font-semibold hover:underline ml-1">register</a></p>
+      </form>
     </div>
-    </form>  
   </div>
-</div>
+
 </body>
 
 </html>
