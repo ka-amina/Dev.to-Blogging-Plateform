@@ -112,6 +112,11 @@ class ArticleController
         return $this->article->getArticleById($id);
     }
 
+    public function getArticleByslug($id)
+    {
+        return $this->article->getArticleByslug($id);
+    }
+
     public function getArticlesByAuthor($id)
     {
         return $this->article->getArticlesByAuthor($id);
@@ -119,5 +124,9 @@ class ArticleController
 
     public function reviewArticle($status, $id){
         return $this->article->reviewArticle($status,$id);
+    }
+
+    public function getpublishedArticles(){
+        return $this->article->getpublishedArticles();
     }
 }
