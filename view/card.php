@@ -3,7 +3,11 @@ require_once '../app/config/connexion.php';
 require '../vendor/autoload.php';
 
 use App\Controllers\ArticleController;
+use App\Controllers\userController;
+
+$user = new userController();
 $articlesList = new ArticleController();
+$user->incrementViews($_GET['id']);
 $articleInfo = $articlesList->getArticleById($_GET['id']);
 
 ?>

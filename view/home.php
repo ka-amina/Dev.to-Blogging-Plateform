@@ -45,14 +45,12 @@ require '../vendor/autoload.php';
 
 use App\Controllers\ArticleController;
 use App\Controllers\AdminController;
-// use App\Controllers\userController;
 
-// $user= new userController();
-// $user->incrementViews(1);
 // $admin= new AdminController();
 $articleList = new ArticleController();
 // $admin->reviewArticle(['status'=>'draft'],['id'=>1]);
 $articles = $articleList->getpublishedArticles();
+
 // foreach ($articles as $a) {
 //       echo "Article ID: " . $a['id'] . "v: ". $a['views']. "status: ".$a['status']."<br> ";  // Display article id
 //   }
@@ -62,8 +60,8 @@ $articles = $articleList->getpublishedArticles();
 //     $categoryList->createCategory($_POST);
 // }
 
-if (isset($_GET['action']) && $_GET['action'] == 'read'){
-    $articleList->getArticleById($_GET['id']);
+if (isset($_GET['action']) && $_GET['action'] == 'read' && isset($_GET['id'])) {
+  $articleList->getArticleById($_GET['id']);
 }
 // if (isset($_GET['action']) && $_GET['action'] == 'reject') {
 //   $admin->reviewArticle(['status'=>'draft'],['id'=>$_GET['id']]);
@@ -437,14 +435,14 @@ if (isset($_GET['action']) && $_GET['action'] == 'read'){
                     <h3><?= $article['title'] ?></h3>
                     <div class="text-sm"> Category : <span class="text-sm text-slate-700 dark:text-slate-400"><?= $article['category_name'] ?></span></div>
                     <div class="flex justify-center">
-                    <a href="card.php?action=read&id=<?= $article['id']; ?>">
+                      <a href="card.php?action=read&id=<?= $article['id']; ?>">
                         <img src="../assets/articleimages/<?= $article['image'] ?>" alt="">
-                    </a>
+                      </a>
                     </div>
                     <p class="text-sm text-slate-700 dark:text-slate-400">
-                    <a href="card.php?action=read&id=<?= $article['id']; ?> ">
-                      <?= $article['meta_description'] ?>
-                    </a>
+                      <a href="card.php?action=read&id=<?= $article['id']; ?> ">
+                        <?= $article['meta_description'] ?>
+                      </a>
                     </p>
                     <div class="-ms-2 grid grid-cols-4">
                       <div>

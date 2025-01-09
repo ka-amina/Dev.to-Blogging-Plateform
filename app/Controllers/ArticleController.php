@@ -3,14 +3,19 @@
 namespace App\Controllers;
 
 use App\Models\Article;
+use App\Controllers\userController;
+
+
 
 class ArticleController
 {
     protected $article;
+    
 
     public function __construct()
     {
         $this->article = new Article();
+        
     }
 
     public function listArticles()
