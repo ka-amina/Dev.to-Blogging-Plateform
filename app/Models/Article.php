@@ -78,4 +78,12 @@ class Article
         return $this->orm->getpublishedArticles();
     }
 
+    public function getLastArticleId(){
+        return $this->orm->getLastArticleId();
+    }
+
+    public function createArticleTags($data)
+    {
+        return $this->orm->createArticleTags($data);
+    }
 }

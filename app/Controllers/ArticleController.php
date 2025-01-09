@@ -10,12 +10,11 @@ use App\Controllers\userController;
 class ArticleController
 {
     protected $article;
-    
+
 
     public function __construct()
     {
         $this->article = new Article();
-        
     }
 
     public function listArticles()
@@ -27,6 +26,10 @@ class ArticleController
     {
         return $this->article->getRecentArticles();
     }
+    public function getLastArticleId()
+    {
+        return $this->article->getLastArticleId();
+    }
 
     public function deleteArticle($id)
     {
@@ -36,6 +39,10 @@ class ArticleController
             header("Location: articles.php");
             exit();
         }
+    }
+
+    public function createArticleTags($data){
+        return $this->article->createArticleTags($data);
     }
 
     public function createArticle($data)
@@ -64,14 +71,25 @@ class ArticleController
                 'featured_image' => $image,
                 'author_id' => $_SESSION["id_author"]
             ];
-            $this->article->createArticle($data);
-            if ($_SESSION['role'] == 'admin'){
-            header("Location: articles.php");
-            }else{
-            header("Location: authorArticles.php");
+            $is_created = $this->article->createArticle($data);
+            // if ($is_created) {
+            //     $last_article= $this->article->getLastArticleId();
+            //     $last_article_id=$last_article['id'];
+            //     if (isset($_POST['tags_id']) && !empty($_POST['tags_id'])) {
+            //         foreach ($_POST['tags_id'] as $tagId) {
+            //             // print_r($_POST['tags_id']);
+            //             $tags = [
+            //                 'article_id' => $last_article_id,
+            //                 'tag_id' => $tagId
+            //             ];
+            //             // print_r($tags);
+            //             $this->article->createArticleTags($tags);
+            //         }
+            //     }
                 
-            }
-            exit();
+                
+            // }
+            
         }
     }
 
@@ -108,7 +126,6 @@ class ArticleController
             $this->article->updateArticle($data, ['id' => $_GET['id']]);
             header("Location: articles.php");
             exit();
-
         }
     }
 
@@ -132,11 +149,13 @@ class ArticleController
         return $this->article->getArticlesByAuthor($id);
     }
 
-    public function reviewArticle($status, $id){
-        return $this->article->reviewArticle($status,$id);
+    public function reviewArticle($status, $id)
+    {
+        return $this->article->reviewArticle($status, $id);
     }
 
-    public function getpublishedArticles(){
+    public function getpublishedArticles()
+    {
         return $this->article->getpublishedArticles();
     }
 }

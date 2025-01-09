@@ -7,13 +7,25 @@ session_start();
 use App\Controllers\ArticleController;
 use App\Controllers\CategoryController;
 use App\Controllers\AdminController;
+use App\Controllers\TagController;
+
 
 $articlesList = new ArticleController();
+// $articlesList->createArticleTags([
+//     'article_id' => 22,
+//     'tag_id' => 2
+// ]);
 $categoryList = new CategoryController();
-$admin= new AdminController();
+$admin = new AdminController();
+$tagsList = new TagController();
+
+$tags = $tagsList->listTags();
+
 
 
 $articles = $articlesList->listArticles();
+// $last=$articlesList->getLastArticleId();
+// print_r($last);
 $categories = $categoryList->listCategories();
 if (isset($_GET['action']) && $_GET['action'] == 'create') {
     $articlesList->createArticle($_POST);
@@ -24,14 +36,33 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
 }
 
 if (isset($_GET['action']) && $_GET['action'] == 'accept') {
-    $admin->reviewArticle(['status'=>'published'],['id'=>$_GET['id']]);
+    $admin->reviewArticle(['status' => 'published'], ['id' => $_GET['id']]);
     header("Location: articles.php");
-
 }
 
 if (isset($_GET['action']) && $_GET['action'] == 'reject') {
-    $admin->reviewArticle(['status'=>'draft'],['id'=>$_GET['id']]);
+    $admin->reviewArticle(['status' => 'draft'], ['id' => $_GET['id']]);
     header("Location: articles.php");
+}
+
+
+$last_article = $articlesList->getLastArticleId();
+$last_article_id = $last_article['id'];
+if (isset($_POST['tags_id']) && !empty($_POST['tags_id'])) {
+    foreach ($_POST['tags_id'] as $tagId) {
+        $tags = [
+            'article_id' => $last_article_id,
+            'tag_id' => $tagId
+        ];
+        // print_r($tags);
+        $articlesList->createArticleTags($tags);
+    }
+    if ($_SESSION['role'] == 'admin') {
+        header("Location: articles.php");
+    } else {
+        header("Location: authorArticles.php");
+    }
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -142,7 +173,9 @@ if (isset($_GET['action']) && $_GET['action'] == 'reject') {
                             type="button"
                             class="flex size-9 items-center justify-center rounded-xl bg-green-700 text-white hover:bg-green-600 active:bg-green-700">
                             <a href="home.php">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="20" height="20" fill="currentColor"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M543.8 287.6c17 0 32-14 32-32.1c1-9-3-17-11-24L512 185l0-121c0-17.7-14.3-32-32-32l-32 0c-17.7 0-32 14.3-32 32l0 36.7L309.5 7c-6-5-14-7-21-7s-15 1-22 8L10 231.5c-7 7-10 15-10 24c0 18 14 32.1 32 32.1l32 0 0 69.7c-.1 .9-.1 1.8-.1 2.8l0 112c0 22.1 17.9 40 40 40l16 0c1.2 0 2.4-.1 3.6-.2c1.5 .1 3 .2 4.5 .2l31.9 0 24 0c22.1 0 40-17.9 40-40l0-24 0-64c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 64 0 24c0 22.1 17.9 40 40 40l24 0 32.5 0c1.4 0 2.8 0 4.2-.1c1.1 .1 2.2 .1 3.3 .1l16 0c22.1 0 40-17.9 40-40l0-16.2c.3-2.6 .5-5.3 .5-8.1l-.7-160.2 32 0z"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="20" height="20" fill="currentColor"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                    <path d="M543.8 287.6c17 0 32-14 32-32.1c1-9-3-17-11-24L512 185l0-121c0-17.7-14.3-32-32-32l-32 0c-17.7 0-32 14.3-32 32l0 36.7L309.5 7c-6-5-14-7-21-7s-15 1-22 8L10 231.5c-7 7-10 15-10 24c0 18 14 32.1 32 32.1l32 0 0 69.7c-.1 .9-.1 1.8-.1 2.8l0 112c0 22.1 17.9 40 40 40l16 0c1.2 0 2.4-.1 3.6-.2c1.5 .1 3 .2 4.5 .2l31.9 0 24 0c22.1 0 40-17.9 40-40l0-24 0-64c0-17.7 14.3-32 32-32l64 0c17.7 0 32 14.3 32 32l0 64 0 24c0 22.1 17.9 40 40 40l24 0 32.5 0c1.4 0 2.8 0 4.2-.1c1.1 .1 2.2 .1 3.3 .1l16 0c22.1 0 40-17.9 40-40l0-16.2c.3-2.6 .5-5.3 .5-8.1l-.7-160.2 32 0z" />
+                                </svg>
                             </a>
                         </button>
 
@@ -561,8 +594,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'reject') {
                                                 <td class="relative p-2">
                                                     <div class="flex ">
                                                         <a href="articles.php?action=accept&id=<?= $article['id']; ?>" class="mr-2">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24"
-                                                        height="24" fill="currentColor"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24"
+                                                                height="24" fill="currentColor"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                                                                <path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
+                                                            </svg>
                                                         </a>
 
                                                         <a href="articles.php?action=reject&id=<?= $article['id']; ?>" class="mr-2"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24"
@@ -653,6 +688,20 @@ if (isset($_GET['action']) && $_GET['action'] == 'reject') {
                                             <?php endforeach; ?>
                                         </select>
                                     </div>
+                                    <?php
+                                    foreach ($tags as $tag): ?>
+                                        <div class="mb-2">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="tag_<?php echo $tag['id']; ?>"
+                                                name="tags_id[]"
+                                                value="<?php echo $tag['id']; ?>"
+                                                <?php echo (isset($_POST['tags_id']) && in_array($tag['id'], $_POST['tags_id'])) ? 'checked' : ''; ?>>
+
+                                            <label class="form-check-label" for="tag_<?php echo $tag['id']; ?>">
+                                                <?php echo $tag['name']; ?>
+                                            </label>
+                                        </div>
+                                    <?php endforeach; ?>
 
                                     <button type="submit"
                                         class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">

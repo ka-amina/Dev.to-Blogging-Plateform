@@ -230,5 +230,21 @@ class ORM
      
     }
 
+    public function getLastArticleId(){
+        $query = "SELECT * from articles order by created_At desc limit 1;";
+        $result = $this->connection->prepare($query);
+        $result->execute();
+        return $result->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function createArticleTags($data){
+        $columns = implode(",", array_keys($data));
+        $values = ":" . implode(", :", array_keys($data));
+        print_r($data);
+        $query = "INSERT  INTO article_tags ($columns) VALUES ($values) ";
+        $result = $this->connection->prepare($query);
+        $result->execute($data);
+        return;
+    }
     
 }
