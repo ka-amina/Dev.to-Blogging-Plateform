@@ -49,9 +49,9 @@ use App\Controllers\AdminController;
 
 // $user= new userController();
 // $user->incrementViews(1);
-$admin= new AdminController();
+// $admin= new AdminController();
 $articleList = new ArticleController();
-$admin->reviewArticle(['status'=>'published'],['id'=>1]);
+// $admin->reviewArticle(['status'=>'draft'],['id'=>1]);
 $articles = $articleList->listArticles();
 // foreach ($articles as $a) {
 //       echo "Article ID: " . $a['id'] . "v: ". $a['views']. "status: ".$a['status']."<br> ";  // Display article id

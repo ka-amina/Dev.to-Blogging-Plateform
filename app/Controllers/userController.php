@@ -43,6 +43,8 @@ class userController
                 $_SESSION["role"] = $user["role"];
                 $_SESSION["id_author"] = $user["id"];
                 $_SESSION["username"] = $user["username"];
+                $_SESSION["email"] = $user["email"];
+
                 if ($_SESSION['role'] == 'admin') {
                     header("Location: dashboard.php");
                 } elseif ($_SESSION['role'] == 'author') {
@@ -120,7 +122,12 @@ class userController
                 move_uploaded_file($temp_file, $folder);
             } else {
                 // Use the existing image
-                $image = $_POST['old_image'];
+                $image = $_GET['old_image'];
+            }
+            if(isset($_POST['password'])){
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            }else{
+                $password= $_GET['old_password']; 
             }
             $username = $_POST['username'];
             $email = $_POST['email'];
@@ -130,7 +137,7 @@ class userController
             $data = [
                 'username' => $username,
                 'email' => $email,
-                // 'password_hash' => $password,
+                'password_hash' => $password,
                 'bio' => $bio,
                 'role' => $role,
                 'profile_picture_url' => $image,
@@ -140,5 +147,14 @@ class userController
             exit();
         }
     }
-}
 
+    // public function logout()
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         session_start();
+            
+    //         header('Location: login.php');
+    //         exit();
+    //     }
+    // }
+}
