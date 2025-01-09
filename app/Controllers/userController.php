@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\user;
+use PDO;
 
 class userController
 {
@@ -66,6 +67,11 @@ class userController
     public function showUsers()
     {
         return $this->user->showUsers();
+    }
+
+    public function getTopUsers()
+    {
+        return $this->user->getTopUsers();
     }
 
     public function deleteUser($id)
@@ -157,4 +163,8 @@ class userController
     //         exit();
     //     }
     // }
+
+    public function countUsers(){
+        return $this->user->countUsers();
+    }
 }

@@ -3,19 +3,29 @@
 namespace App\Controllers;
 
 use App\Models\Article;
+use App\Controllers\userController;
+
+
 
 class ArticleController
 {
     protected $article;
+    
 
     public function __construct()
     {
         $this->article = new Article();
+        
     }
 
     public function listArticles()
     {
         return $this->article->getArticle();
+    }
+
+    public function getRecentArticles()
+    {
+        return $this->article->getRecentArticles();
     }
 
     public function deleteArticle($id)
@@ -112,6 +122,11 @@ class ArticleController
         return $this->article->getArticleById($id);
     }
 
+    public function getArticleByslug($id)
+    {
+        return $this->article->getArticleByslug($id);
+    }
+
     public function getArticlesByAuthor($id)
     {
         return $this->article->getArticlesByAuthor($id);
@@ -119,5 +134,9 @@ class ArticleController
 
     public function reviewArticle($status, $id){
         return $this->article->reviewArticle($status,$id);
+    }
+
+    public function getpublishedArticles(){
+        return $this->article->getpublishedArticles();
     }
 }
