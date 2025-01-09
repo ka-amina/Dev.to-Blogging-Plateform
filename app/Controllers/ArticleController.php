@@ -55,7 +55,12 @@ class ArticleController
                 'author_id' => $_SESSION["id_author"]
             ];
             $this->article->createArticle($data);
+            if ($_SESSION['role'] == 'admin'){
+            header("Location: articles.php");
+            }else{
             header("Location: authorArticles.php");
+                
+            }
             exit();
         }
     }

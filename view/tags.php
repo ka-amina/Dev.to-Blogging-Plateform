@@ -2,6 +2,8 @@
 require_once '../app/config/connexion.php';
 require '../vendor/autoload.php';
 
+session_start();
+
 use App\Controllers\TagController;
 
 $tagsList = new TagController();
@@ -235,11 +237,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete'){
 
                             <?php }?>
                         
-                        <?php if ($_SESSION['role'] == 'admin') { ?>
-                            
-
-                            
-                        <?php } ?>
 
                         <!-- <button
                             x-on:click="activeTab = 'Settings'"
@@ -266,9 +263,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete'){
                             </svg>
                         </button> -->
 
-                        <?php if ($_SESSION['role'] == 'admin') { ?>
-                            
-                        <?php } ?>
 
 
 

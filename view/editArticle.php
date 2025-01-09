@@ -1,6 +1,7 @@
 <?php
 require_once '../app/config/connexion.php';
 require '../vendor/autoload.php';
+session_start();
 
 use App\Controllers\ArticleController;
 use App\Controllers\CategoryController;

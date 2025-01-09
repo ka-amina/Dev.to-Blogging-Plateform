@@ -2,6 +2,8 @@
 require_once '../app/config/connexion.php';
 require '../vendor/autoload.php';
 
+session_start();
+
 use App\Controllers\ArticleController;
 use App\Controllers\CategoryController;
 use App\Controllers\TagController;
@@ -234,11 +236,6 @@ $categoryCount = $categoryCounter->countCategories();
 
                             <?php }?>
                         
-                        <?php if ($_SESSION['role'] == 'admin') { ?>
-                            
-
-                            
-                        <?php } ?>
 
                         <!-- <button
                             x-on:click="activeTab = 'Settings'"
@@ -265,9 +262,6 @@ $categoryCount = $categoryCounter->countCategories();
                             </svg>
                         </button> -->
 
-                        <?php if ($_SESSION['role'] == 'admin') { ?>
-                            
-                        <?php } ?>
 
 
 
