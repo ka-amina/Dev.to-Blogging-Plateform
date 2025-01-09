@@ -45,7 +45,7 @@ class userController
                 if ($_SESSION['role'] == 'admin') {
                     header("Location: dashboard.php");
                 } elseif ($_SESSION['role'] == 'author') {
-                    header("Location: articles.php");
+                    header("Location: authorArticles.php");
                 }
                 exit();
             } else {
@@ -53,6 +53,10 @@ class userController
                 header("Location: home.php");
             }
         }
+    }
+
+    public function incrementViews($id){
+        return $this->user->incremetViews($id);
     }
     
 }
