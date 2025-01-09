@@ -98,7 +98,22 @@ class ORM
         $result->execute();
         return $result->fetch(PDO::FETCH_ASSOC);
     }
+    public function getArticlesByAuthor($id)
+    {
 
+        $query = "SELECT users.id as author_id,articles.id,title,slug,meta_description,featured_image as image,content,excerpt,status,views,created_at,categories.name as category_name,users.username as author_name,GROUP_CONCAT(tags.name) as tag_names
+        from articles
+        JOIN categories on articles.category_id = categories.id
+        join users on articles.author_id = users.id
+        left join article_tags on articles.id = article_tags.article_id
+        left join tags on article_tags.tag_id = tags.id
+        where articles.author_id=$id
+        group by articles.id
+        order by articles.created_at desc";
+        $result = $this->connection->prepare($query);
+        $result->execute();
+        return $result->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function sum()
     {
         $query = "SELECT COUNT(*) as total from {$this->table}";
@@ -114,4 +129,35 @@ class ORM
         $result->execute();
         return $result->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function login($email, $password)
+    {
+        $query = "SELECT * FROM users WHERE email = :email";
+        $result = $this->connection->prepare($query);
+        $result->bindParam(':email', $email, PDO::PARAM_STR);
+        $result->execute();
+        $row = $result->fetch(PDO::FETCH_ASSOC);
+        if ($result->rowCount() > 0) {
+            if (password_verify($password, $row["password_hash"])) {
+                return $row;
+            }
+            return false;
+        }
+    }
+
+    // public function reviewArticle($status,$id){
+    //     $query="UPDATE articles set status=$status where id=$id";
+    //     $result= $this->connection->prepare($query);
+    //     $result->execute();
+    //     return;
+    // }
+
+    public function incrementViews($id){
+        $query="UPDATE articles set views=views+1 where id=$id";
+        $result=$this->connection->prepare($query);
+        $result->execute();
+        return;
+    }
+
+    
 }

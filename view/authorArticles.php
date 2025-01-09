@@ -10,7 +10,9 @@ use App\Controllers\CategoryController;
 $articlesList = new ArticleController();
 $categoryList = new CategoryController();
 
-$articles = $articlesList->listArticles();
+$articles = $articlesList->getArticlesByAuthor($_SESSION["id_author"]);
+// print_r($articles);
+// echo$_SESSION["id_author"];
 $categories = $categoryList->listCategories();
 if (isset($_GET['action']) && $_GET['action'] == 'create') {
     $articlesList->createArticle($_POST);
@@ -482,10 +484,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                                             </th>
                                             <th
                                                 class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Author Name
-                                            </th>
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
                                                 Tag Names
                                             </th>
                                             <th
@@ -525,9 +523,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                                                 </td>
                                                 <td class="relative p-2">
                                                     <?= $article['category_name'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['author_name'] ?>
                                                 </td>
                                                 <td class="relative p-2">
                                                     <?= $article['tag_names'] ?>

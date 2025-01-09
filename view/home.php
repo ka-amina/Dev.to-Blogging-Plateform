@@ -44,9 +44,19 @@ require_once '../app/config/connexion.php';
 require '../vendor/autoload.php';
 
 use App\Controllers\ArticleController;
+use App\Controllers\AdminController;
+// use App\Controllers\userController;
 
+// $user= new userController();
+// $user->incrementViews(1);
+$admin= new AdminController();
 $articleList = new ArticleController();
+$admin->reviewArticle(['status'=>'published'],['id'=>1]);
 $articles = $articleList->listArticles();
+// foreach ($articles as $a) {
+//       echo "Article ID: " . $a['id'] . "v: ". $a['views']. "status: ".$a['status']."<br> ";  // Display article id
+//   }
+
 // if (isset($_GET['action']) && $_GET['action'] == 'create') {
 //     $categoryList->createCategory($_POST);
 // }

@@ -4,21 +4,30 @@ require '../vendor/autoload.php';
 
 session_start();
 
-use App\Controllers\ArticleController;
-use App\Controllers\CategoryController;
+// use App\Controllers\ArticleController;
+// use App\Controllers\CategoryController;
+use App\Controllers\userController;
 
-$articlesList = new ArticleController();
-$categoryList = new CategoryController();
+// $articlesList = new ArticleController();
+// $categoryList = new CategoryController();
+$users = new userController();
 
-$articles = $articlesList->listArticles();
-$categories = $categoryList->listCategories();
-if (isset($_GET['action']) && $_GET['action'] == 'create') {
-    $articlesList->createArticle($_POST);
-}
+$user = $users->showUsers();
 
-if (isset($_GET['action']) && $_GET['action'] == 'delete') {
-    $articlesList->deleteArticle($_GET['id']);
-}
+$userInfo = $users->getUserById($_GET['id']);
+
+
+$users->updateUser();
+
+// $articles = $articlesList->listArticles();
+// $categories = $categoryList->listCategories();
+// if (isset($_GET['action']) && $_GET['action'] == 'create') {
+//     $users->createUser($_POST);
+// }
+
+// if (isset($_GET['action']) && $_GET['action'] == 'delete') {
+//     $users->deleteUser($_GET['id']);
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -421,153 +430,15 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                 id="page-content"
                 class="grow bg-slate-100 pt-16 dark:bg-slate-950">
                 <div class="container mx-auto px-4 py-4 lg:p-8 xl:max-w-7xl">
-                    <div class=" grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4" id="categoryTable">
-                        <!-- Popular Pages -->
-                        <div
-                            class="flex flex-col justify-center overflow-hidden rounded-lg bg-white p-6 ring-1 ring-slate-200/50 dark:bg-slate-900 dark:ring-slate-700/60 xl:col-span-4">
-                            <div class="mb-6 flex items-center justify-between gap-4">
-                                <h2 class="text-xl font-extrabold"><?= $_SESSION["username"] ?>'s Articles</h2>
-                                <button
-                                    id="showCategoryForm"
-                                    type="button"
-                                    class="flex items-center justify-between gap-1.5 rounded-lg bg-slate-100 px-2 py-2 text-sm font-semibold text-slate-500 hover:bg-slate-200/75 hover:text-slate-950 active:bg-slate-100 dark:bg-slate-700/50 dark:text-slate-100 dark:hover:bg-slate-700 dark:hover:text-white dark:active:bg-slate-700/50">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" viewBox="0 0 512 512" width="24"
-                                        height="24" fill="currentColor"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                                        <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="overflow-x-auto">
-                                <table class="w-full text-sm  ">
-                                    <thead>
-                                        <tr>
-                                            <th
-                                                class="py-2 pe-2 text-start font-medium text-slate-500 dark:text-slate-400">
-                                                id
-                                            </th>
 
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Title
-                                            </th>
-
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Image
-                                            </th>
-
-                                            <th
-                                                class=" w-1/4 py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Content
-                                            </th>
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Excerpt
-                                            </th>
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Status
-                                            </th>
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Views
-                                            </th>
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Created At
-                                            </th>
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Category Name
-                                            </th>
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Author Name
-                                            </th>
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Tag Names
-                                            </th>
-                                            <th
-                                                class="py-2 ps-2 text-end font-medium text-slate-500 dark:text-slate-400">
-                                                Actions
-                                            </th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <?php foreach ($articles as $article) : ?>
-                                            <tr>
-                                                <td class="relative p-2">
-                                                    <?= $article['id']; ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['title'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <img src="../assets/articleimages/<?= $article['image'] ?>" alt="" width="100" height="100">
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['content'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['excerpt'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['status'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['views'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['created_at'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['category_name'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['author_name'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <?= $article['tag_names'] ?>
-                                                </td>
-                                                <td class="relative p-2">
-                                                    <div class="flex">
-                                                        <a href="editArticle.php?action=update&id=<?= $article['id']; ?>" id="update"
-                                                            name="update">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="24"
-                                                                height="24" fill="currentColor"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                                                                <path d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152L0 424c0 48.6 39.4 88 88 88l272 0c48.6 0 88-39.4 88-88l0-112c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 112c0 22.1-17.9 40-40 40L88 464c-22.1 0-40-17.9-40-40l0-272c0-22.1 17.9-40 40-40l112 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 64z" />
-                                                            </svg>
-                                                        </a>
-
-                                                        <a href="articles.php?action=delete&id=<?= $article['id']; ?>" id="delete"
-                                                            name="delete">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24"
-                                                                height="24" fill="currentColor"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
-                                                                <path d="M170.5 51.6L151.5 80l145 0-19-28.4c-1.5-2.2-4-3.6-6.7-3.6l-93.7 0c-2.7 0-5.2 1.3-6.7 3.6zm147-26.6L354.2 80 368 80l48 0 8 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-8 0 0 304c0 44.2-35.8 80-80 80l-224 0c-44.2 0-80-35.8-80-80l0-304-8 0c-13.3 0-24-10.7-24-24S10.7 80 24 80l8 0 48 0 13.8 0 36.7-55.1C140.9 9.4 158.4 0 177.1 0l93.7 0c18.7 0 36.2 9.4 46.6 24.9zM80 128l0 304c0 17.7 14.3 32 32 32l224 0c17.7 0 32-14.3 32-32l0-304L80 128zm80 64l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16zm80 0l0 208c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-208c0-8.8 7.2-16 16-16s16 7.2 16 16z" />
-                                                            </svg>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                        <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <!-- END Referrers -->
-
-                    </div>
-                    <div id="categoryForm" class=" hidden flex flex-col justify-center overflow-hidden rounded-lg bg-white p-6 ring-1 ring-slate-200/50 dark:bg-slate-900 dark:ring-slate-700/60 xl:col-span-4 justify-center ">
+                    <div id="categoryForm" class=" flex flex-col justify-center overflow-hidden rounded-lg bg-white p-6 ring-1 ring-slate-200/50 dark:bg-slate-900 dark:ring-slate-700/60 xl:col-span-4 justify-center ">
 
                         <div class="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-800 py-8">
                             <div class="w-full max-w-xl bg-white dark:bg-gray-900 rounded-lg shadow-md p-6">
 
-                                <form action="articles.php?action=create" method="POST" enctype="multipart/form-data">
+                                <form action="edituser.php?id=<?= $_GET['id']; ?>" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" name="id" value="<?= $_GET['id']; ?>">
+                                    <input type="hidden" name="old_image" value="<?= $articleInfo['profile_picture_url']; ?>">
                                     <div class="mb-4">
                                         <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Image</label>
                                         <input type="file" id="image" name="image"
@@ -576,48 +447,38 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
 
                                         <div>
-                                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                                            <input type="text" id="title" name="title" placeholder="title"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                                            <input type="text" id="username" name="username" placeholder="username"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<?= $userInfo['username']?>">
                                         </div>
                                         <div>
-                                            <label for="slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
-                                            <input type="text" id="slug" name="slug" placeholder="slug"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
+                                            <input type="email" id="email" name="email" placeholder="email"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<?= $userInfo['email']?>">
                                         </div>
                                     </div>
+
+                                    <!-- <div class="mb-4">
+                                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Excerpt</label>
+                                        <input type="text" id="password" name="password" placeholder="password"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </div> -->
+
                                     <div class="mb-4">
-                                        <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
-                                        <textarea id="content" name="content" rows="4"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                        <label for="bio" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content</label>
+                                        <textarea id="bio" name="bio" rows="4"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<?= $userInfo['bio']?>"></textarea>
                                     </div>
 
                                     <div class="mb-4">
-                                        <label for="excerpt" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Excerpt</label>
-                                        <input type="text" id="excerpt" name="excerpt" placeholder="excerpt"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="meta_description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Meta Description</label>
-                                        <input type="text" id="meta_description" name="meta_description" placeholder="meta description"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-                                        <select id="category" name="category"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                            <option value="">Select Category</option>
-                                            <?php foreach ($categories as $category) : ?>
-                                                <option value="<?= $category['id']; ?>"><?= $category['name'] ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                        <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">role</label>
+                                        <input type="text" id="role" name="role" placeholder="role"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<?= $userInfo['role']?>">
                                     </div>
 
                                     <button type="submit"
                                         class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
-                                        Add Article
+                                        update User
                                     </button>
                                 </form>
                             </div>

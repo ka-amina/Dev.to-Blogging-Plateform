@@ -5,15 +5,15 @@ use App\Models\ORM;
 
 class Article{
     protected $table = 'articles';
-    private $title;
-    private $slug;
-    private $content;
-    private $excerpt;
-    private $country;
-    private $category;
-    private $fratured_image;
-    private $status;
-    private $author_id;
+    // private $title;
+    // private $slug;
+    // private $content;
+    // private $excerpt;
+    // private $country;
+    // private $category;
+    // private $fratured_image;
+    // private $status;
+    // private $author_id;
     private $orm;
 
    public function __construct(){
@@ -45,6 +45,12 @@ class Article{
     return $this->orm->getArticlesById($id);
    }
 
+   public function getArticlesByAuthor($id){
+    return $this->orm->getArticlesByAuthor($id);
+   }
+   public function reviewArticle($status,$id){
+    $this->orm->update($status,$id);
+}
 }
 
 

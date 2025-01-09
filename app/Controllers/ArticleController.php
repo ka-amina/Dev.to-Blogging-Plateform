@@ -30,6 +30,7 @@ class ArticleController
 
     public function createArticle($data)
     {
+        // session_start();
         $image = $_FILES['image']['name'];
         $temp_file = $_FILES['image']['tmp_name'];
         $folder = "../assets/articleimages/$image";
@@ -51,10 +52,15 @@ class ArticleController
                 'meta_description' => $meta_description,
                 'category_id' => $category,
                 'featured_image' => $image,
-                'author_id' => 7
+                'author_id' => $_SESSION["id_author"]
             ];
             $this->article->createArticle($data);
+            if ($_SESSION['role'] == 'admin'){
             header("Location: articles.php");
+            }else{
+            header("Location: authorArticles.php");
+                
+            }
             exit();
         }
     }
@@ -87,7 +93,7 @@ class ArticleController
                 'meta_description' => $meta_description,
                 'category_id' => $category,
                 'featured_image' => $image,
-                'author_id' => $author_id
+                'author_id' => $_SESSION["id_author"]
             ];
             $this->article->updateArticle($data, ['id' => $_GET['id']]);
             header("Location: articles.php");
@@ -104,5 +110,14 @@ class ArticleController
     public function getArticleById($id)
     {
         return $this->article->getArticleById($id);
+    }
+
+    public function getArticlesByAuthor($id)
+    {
+        return $this->article->getArticlesByAuthor($id);
+    }
+
+    public function reviewArticle($status, $id){
+        return $this->article->reviewArticle($status,$id);
     }
 }
